@@ -45,7 +45,7 @@ npm run build      # static bundle in dist/
 Add Cookie Chain as a custom SVM network in Nightly:
 
 - RPC: `https://rpc.cookiescan.io`
-- WebSocket: `wss://wss.cookiescan.io`
+- WebSocket: `wss://rpc.cookiescan.io`
 
 Explorer: https://cookiescan.io
 
