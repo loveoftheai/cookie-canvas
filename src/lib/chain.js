@@ -9,7 +9,9 @@ import {
 } from "@solana/web3.js";
 
 export const COOKIE_RPC = "https://rpc.cookiescan.io";
-export const COOKIE_WSS = "wss.cookiescan.io";
+// NOTE: docs say wss.cookiescan.io but its TLS cert is invalid — the RPC host
+// serves the same websocket endpoint.
+export const COOKIE_WSS = "wss://rpc.cookiescan.io";
 export const EXPLORER_TX = (sig) => `https://cookiescan.io/tx/${sig}`;
 export const EXPLORER_ADDR = (addr) => `https://cookiescan.io/account/${addr}`;
 
