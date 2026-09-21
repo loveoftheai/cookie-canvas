@@ -3,6 +3,7 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useCanvasState } from "./hooks/useCanvasState";
 import CanvasBoard from "./components/CanvasBoard";
+import ReplayBar from "./components/ReplayBar";
 import { Palette, Activity, Leaderboard } from "./components/Sidebar";
 import { COOKIE_RPC, EXPLORER_ADDR, TREASURY } from "./lib/chain";
 
@@ -33,6 +34,17 @@ export default function App() {
   const [busy, setBusy] = useState(false);
   const [color, setColor] = useState("f0b050");
   const [cooldown, setCooldown] = useState(false);
+  // time-lapse: replayUntil = null → live board; number → only pixels ≤ that blockTime
+  const [replayUntil, setReplayUntil] = useState(null);
+  const shownPixels = useMemo(
+    () =>
+      replayUntil === null
+        ? pixels
+        : new Map(
+            [...pixels].filter(([, p]) => (p.blockTime || 0) <= replayUntil),
+          ),
+    [pixels, replayUntil],
+  );
 
   // ?demo=1 auto-starts demo mode (used by the recorded walkthrough)
   useEffect(() => {
@@ -115,11 +127,18 @@ export default function App() {
       <main>
         <div className="left">
           <CanvasBoard
-            pixels={pixels}
+            pixels={shownPixels}
             pending={pending}
             onPlace={handlePlace}
             disabled={(!connected && !demoActive) || busy || cooldown}
           />
+          <ReplayBar pixels={pixels} onReplay={setReplayUntil} />
+          {replayUntil !== null && (
+            <div className="demo-banner replay-banner">
+              <b>Time-lapse</b> — replaying chain history. Click <b>● Live</b>{" "}
+              to return to the live board.
+            </div>
+          )}
           <div className="statusbar">
             {loading ? (
               <span className="muted">

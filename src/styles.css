@@ -335,3 +335,56 @@ footer {
   margin: 0 0 10px 0;
   font-size: 14px;
 }
+
+/* ── time-lapse replay ─────────────────────────────────── */
+.replay-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  margin-top: 8px;
+  background: rgba(255, 220, 170, 0.04);
+  border: 1px solid rgba(255, 220, 170, 0.12);
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+.replay-btn {
+  background: #f0b050;
+  color: #1c1410;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.replay-btn.live {
+  background: #2a9d8f;
+  color: #fff;
+}
+.replay-bar input[type="range"] {
+  flex: 1;
+  min-width: 140px;
+  accent-color: #f0b050;
+}
+.replay-time {
+  font-size: 12px;
+  color: rgba(255, 235, 205, 0.75);
+  white-space: nowrap;
+}
+.replay-speed button {
+  background: transparent;
+  color: rgba(255, 235, 205, 0.6);
+  border: 1px solid rgba(255, 220, 170, 0.2);
+  border-radius: 6px;
+  padding: 3px 8px;
+  margin-left: 4px;
+  cursor: pointer;
+  font-size: 11px;
+}
+.replay-speed button.on {
+  color: #f0b050;
+  border-color: #f0b050;
+}
+.replay-banner {
+  margin-top: 8px;
+}
