@@ -4,7 +4,22 @@ A collaborative pixel-art board that lives **entirely on Cookie Chain**. Every p
 placed by every visitor is a real on-chain transaction; the whole artwork can be
 rebuilt from public chain data alone — no backend, no database, no indexer service.
 
-Built for the **"Create an App on Cookie Chain"** bounty (Superteam Earn).
+Built for the **"Create an App on Cookie Chain"** bounty (Superteam Earn), and
+submitted to the **Colosseum Crypto World's Fair MVP hackathon**.
+
+**Live:** https://loveoftheai.github.io/cookie-canvas/ ·
+**Demo video:** https://youtu.be/LLyP8R0Tkb8
+
+## Demo mode (honest by design)
+
+Cookie Chain has **no faucet** — test COOK is only obtainable by bridging real
+funds from Solana via [Hyperlane](https://hyperlane.cookiescan.io). So the app
+ships with a **clearly-labeled demo mode** ("▶ Try demo"): it replays a
+simulated pixel timeline through the _exact same_ pipeline (palette → signing →
+broadcasting → confirming → feed/leaderboard) with no wallet and no chain
+writes. Demo pixels are always tagged `demo` in the feed, banner, and status
+bar — they are never presented as on-chain data. Connect Nightly with bridged
+COOK to bake **real** pixels (each one verifiable on cookiescan.io).
 
 ## How it works
 
