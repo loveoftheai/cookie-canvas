@@ -150,11 +150,16 @@ export default function CanvasBoard({
       {empty && (
         <div className="board-empty">
           <b>The chain canvas is blank.</b>
+          <img
+            className="empty-preview"
+            src={`${import.meta.env.BASE_URL}preview.png`}
+            alt="Demo-mode preview of a populated board"
+          />
           <span>
             No real pixels yet — each one costs a transaction (0.000001
-            {NET.needsBridge ? "COOK" : "SOL"}),
-            so the board only fills when someone pays to paint. Be the first, or
-            look around first:
+            {NET.needsBridge ? "COOK" : "SOL"}), so the board only fills when
+            someone pays to paint. Be the first, or look around first (preview
+            above is demo mode):
           </span>
           <button className="demo-btn" onClick={onDemo}>
             ▶ Try demo

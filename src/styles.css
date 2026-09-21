@@ -479,3 +479,13 @@ footer {
 .net-banner {
   border-color: #5eead4;
 }
+
+.board-empty .empty-preview {
+  width: 320px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(240, 176, 80, 0.35);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  margin: 6px 0 2px;
+}
