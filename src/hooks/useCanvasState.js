@@ -8,6 +8,7 @@ import {
   getConnection,
   shortSleep,
 } from "../lib/chain";
+import { buildDemoTimeline, nextDemoSig } from "../lib/demo";
 
 const HISTORY_PAGES = 4; // ~4000 most recent pixels on load
 const FETCH_CONCURRENCY = 6;
@@ -21,6 +22,8 @@ export function useCanvasState({ publicKey, signTransaction, connected }) {
   const [pending, setPending] = useState(null); // {x,y,rgb,status,signature?,error?}
   const seenSigs = useRef(new Set());
   const latestSig = useRef(null);
+  const [demoActive, setDemoActive] = useState(false);
+  const demoTimers = useRef([]);
 
   const ingest = useCallback((px) => {
     if (!px || !px.signature || seenSigs.current.has(px.signature)) return;
@@ -31,6 +34,31 @@ export function useCanvasState({ publicKey, signTransaction, connected }) {
       return next;
     });
     setFeed((prev) => [px, ...prev].slice(0, 200));
+  }, []);
+
+  // Demo mode: replay a scripted, SIMULATED pixel timeline locally so the app
+  // can be explored without a funded wallet. Nothing here touches the chain.
+  const startDemo = useCallback(() => {
+    if (demoActive) return;
+    setDemoActive(true);
+    const items = buildDemoTimeline();
+    // animate in fast (a couple of pixels per tick) for a lively time-lapse
+    let i = 0;
+    const tick = setInterval(() => {
+      for (let k = 0; k < 3 && i < items.length; k++, i++) ingest(items[i]);
+      if (i >= items.length) clearInterval(tick);
+    }, 12);
+    demoTimers.current.push(tick);
+  }, [demoActive, ingest]);
+
+  const stopDemo = useCallback(() => {
+    demoTimers.current.forEach(clearInterval);
+    demoTimers.current = [];
+    setDemoActive(false);
+    // demo pixels leave with the session — refresh to reset the board
+    setPixels(new Map());
+    setFeed([]);
+    seenSigs.current = new Set();
   }, []);
 
   // Initial backfill
@@ -104,6 +132,26 @@ export function useCanvasState({ publicKey, signTransaction, connected }) {
 
   const place = useCallback(
     async (x, y, rgb) => {
+      // Demo mode: walk the same signing → sending → confirming pipeline,
+      // simulated locally (clearly labeled in the UI as demo, not on-chain).
+      if (demoActive) {
+        const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+        for (const status of ["signing", "sending", "confirming"]) {
+          setPending({ x, y, rgb, status });
+          await wait(450);
+        }
+        ingest({
+          x,
+          y,
+          rgb,
+          signature: nextDemoSig("you"),
+          signer: "You (demo)",
+          blockTime: Math.floor(Date.now() / 1000),
+          demo: true,
+        });
+        setPending(null);
+        return "demo";
+      }
       if (!connected || !publicKey || !signTransaction) {
         throw new Error("Connect your Nightly wallet first");
       }
@@ -147,8 +195,18 @@ export function useCanvasState({ publicKey, signTransaction, connected }) {
         throw e;
       }
     },
-    [connected, publicKey, signTransaction, ingest],
+    [connected, publicKey, signTransaction, ingest, demoActive],
   );
 
-  return { pixels, feed, loading, progress, pending, place };
+  return {
+    pixels,
+    feed,
+    loading,
+    progress,
+    pending,
+    place,
+    demoActive,
+    startDemo,
+    stopDemo,
+  };
 }

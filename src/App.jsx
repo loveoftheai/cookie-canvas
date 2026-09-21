@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { useCanvasState } from "./hooks/useCanvasState";
@@ -18,15 +18,32 @@ function Toast({ msg, kind, onClose }) {
 export default function App() {
   const { connection } = useConnection();
   const { publicKey, connected, signTransaction } = useWallet();
-  const { pixels, feed, loading, progress, pending, place } = useCanvasState({
-    publicKey,
-    signTransaction,
-    connected,
-  });
+  const {
+    pixels,
+    feed,
+    loading,
+    progress,
+    pending,
+    place,
+    demoActive,
+    startDemo,
+    stopDemo,
+  } = useCanvasState({ publicKey, signTransaction, connected });
   const [toast, setToast] = useState(null);
   const [busy, setBusy] = useState(false);
   const [color, setColor] = useState("f0b050");
   const [cooldown, setCooldown] = useState(false);
+
+  // ?demo=1 auto-starts demo mode (used by the recorded walkthrough)
+  useEffect(() => {
+    if (
+      !connected &&
+      new URLSearchParams(location.search).get("demo") === "1"
+    ) {
+      const t = setTimeout(startDemo, 2500);
+      return () => clearTimeout(t);
+    }
+  }, [connected, startDemo]);
 
   const statusText = useMemo(() => {
     if (pending?.status === "signing")
@@ -72,8 +89,28 @@ export default function App() {
             </p>
           </div>
         </div>
-        <WalletMultiButton />
+        <div className="wallet-row">
+          {!connected && !demoActive && (
+            <button className="demo-btn" onClick={startDemo}>
+              ▶ Try demo
+            </button>
+          )}
+          {demoActive && (
+            <button className="demo-btn on" onClick={stopDemo}>
+              ✕ Exit demo
+            </button>
+          )}
+          <WalletMultiButton />
+        </div>
       </header>
+
+      {demoActive && (
+        <div className="demo-banner">
+          <b>Demo mode</b> — these pixels are simulated locally so you can
+          explore without a funded wallet. Connect Nightly (with bridged COOK)
+          to bake <i>real</i> on-chain pixels.
+        </div>
+      )}
 
       <main>
         <div className="left">
@@ -81,7 +118,7 @@ export default function App() {
             pixels={pixels}
             pending={pending}
             onPlace={handlePlace}
-            disabled={!connected || busy || cooldown}
+            disabled={(!connected && !demoActive) || busy || cooldown}
           />
           <div className="statusbar">
             {loading ? (
@@ -94,6 +131,10 @@ export default function App() {
               <span className="ok-text">
                 ● Connected — pick a color and click a cell
               </span>
+            ) : demoActive ? (
+              <span className="ok-text">
+                ● Demo mode (simulated) — pick a color and click a cell
+              </span>
             ) : (
               <span className="muted">
                 ● Connect Nightly (add Cookie Chain RPC in Nightly settings)
@@ -102,7 +143,10 @@ export default function App() {
           </div>
         </div>
         <div className="right">
-          <Palette onPick={(c) => setColor(c)} disabled={!connected} />
+          <Palette
+            onPick={(c) => setColor(c)}
+            disabled={!connected && !demoActive}
+          />
           <Activity feed={feed} loading={loading} progress={progress} />
           <Leaderboard feed={feed} pixels={pixels} />
         </div>

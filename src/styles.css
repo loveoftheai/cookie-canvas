@@ -308,3 +308,30 @@ footer {
 .wallet-adapter-modal-wrapper {
   background: var(--panel) !important;
 }
+
+/* demo mode */
+.wallet-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.demo-btn {
+  background: #2a9d8f;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.demo-btn.on {
+  background: #b33939;
+}
+.demo-banner {
+  background: rgba(42, 157, 143, 0.12);
+  border: 1px solid rgba(42, 157, 143, 0.5);
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin: 0 0 10px 0;
+  font-size: 14px;
+}

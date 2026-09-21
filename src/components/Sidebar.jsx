@@ -94,14 +94,20 @@ export function Activity({ feed, loading, progress }) {
         {feed.slice(0, 14).map((p) => (
           <li key={p.signature}>
             <span className="dot" style={{ background: `#${p.rgb}` }} />
-            <a
-              className="mono"
-              href={EXPLORER_TX(p.signature)}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {short(p.signer)}
-            </a>
+            {p.demo ? (
+              <span className="mono">
+                demo·{p.signer.startsWith("You") ? "you" : short(p.signer)}
+              </span>
+            ) : (
+              <a
+                className="mono"
+                href={EXPLORER_TX(p.signature)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {short(p.signer)}
+              </a>
+            )}
             <span className="muted">
               painted ({p.x},{p.y}) {ago(p.blockTime)}
             </span>
