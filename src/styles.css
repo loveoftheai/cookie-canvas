@@ -420,3 +420,38 @@ footer {
   line-height: 1.5;
   font-size: 13.5px;
 }
+
+/* pixel provenance popover (hover) */
+.pixel-pop {
+  position: absolute;
+  z-index: 30;
+  width: 224px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(20, 14, 10, 0.94);
+  border: 1px solid rgba(240, 176, 80, 0.35);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+  line-height: 1.5;
+  pointer-events: none;
+  color: #e8d9c4;
+}
+.pp-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pp-chip {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  display: inline-block;
+}
+.pp-hex {
+  font-family: ui-monospace, monospace;
+  color: #b8a58c;
+}
+.pixel-pop a {
+  color: #f0b050;
+}

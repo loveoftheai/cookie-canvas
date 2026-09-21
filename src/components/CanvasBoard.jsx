@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { CANVAS_H, CANVAS_W } from "../lib/chain";
+import { CANVAS_H, CANVAS_W, EXPLORER_TX } from "../lib/chain";
+
+const fmtTime = (t) =>
+  t
+    ? new Date(t * 1000).toISOString().slice(0, 16).replace("T", " ") + " UTC"
+    : "—";
 
 // 96x96 board rendered on <canvas>, zoomable & pannable by drag.
 export default function CanvasBoard({
@@ -11,8 +16,10 @@ export default function CanvasBoard({
   onDemo,
 }) {
   const ref = useRef(null);
+  const wrapRef = useRef(null);
   const [color, setColor] = useState("#f0b050"); // set by parent palette via props below
   const [hover, setHover] = useState(null);
+  const [cursor, setCursor] = useState({ x: 0, y: 0 }); // viewport px, for the popover
   const view = useRef({ scale: 6, ox: 0, oy: 0 });
   const drag = useRef(null);
   const needsDraw = useRef(true);
@@ -91,10 +98,10 @@ export default function CanvasBoard({
   };
 
   return (
-    <div className="board-wrap">
+    <div className="board-wrap" ref={wrapRef}>
       <div className="board-hint">
         drag to pan · scroll to zoom · click a cell to bake a pixel (1 tx =
-        0.000001 COOK)
+        0.000001 COOK) · hover a pixel for its on-chain provenance
       </div>
       <canvas
         ref={ref}
@@ -116,6 +123,10 @@ export default function CanvasBoard({
           }
           const c = toCell(e);
           setHover(c);
+          if (wrapRef.current) {
+            const r = wrapRef.current.getBoundingClientRect();
+            setCursor({ x: e.clientX - r.left, y: e.clientY - r.top });
+          }
         }}
         onPointerUp={(e) => {
           const d = drag.current;
@@ -148,6 +159,61 @@ export default function CanvasBoard({
           </button>
         </div>
       )}
+      {hover &&
+        (() => {
+          const p = pixels.get(`${hover.x},${hover.y}`);
+          const wrap = wrapRef.current;
+          const W = wrap ? wrap.clientWidth : 640;
+          const H = wrap ? wrap.clientHeight : 640;
+          const left = Math.min(cursor.x + 16, W - 240);
+          const top = cursor.y > H - 130 ? cursor.y - 120 : cursor.y + 16;
+          return (
+            <div
+              className="pixel-pop"
+              style={{ left: Math.max(4, left), top: Math.max(4, top) }}
+            >
+              {p ? (
+                <>
+                  <div className="pp-row">
+                    <span
+                      className="pp-chip"
+                      style={{ background: `#${p.rgb}` }}
+                    />
+                    <b>
+                      ({p.x},{p.y})
+                    </b>
+                    <span className="pp-hex">#{p.rgb}</span>
+                  </div>
+                  <div className="pp-row muted">
+                    by{" "}
+                    {p.demo ? (
+                      "demo painter (simulated)"
+                    ) : (
+                      <code>
+                        {(p.signer || "").slice(0, 4)}…
+                        {(p.signer || "").slice(-4)}
+                      </code>
+                    )}
+                  </div>
+                  <div className="pp-row muted">{fmtTime(p.blockTime)}</div>
+                  {!p.demo && p.signature && (
+                    <a
+                      href={EXPLORER_TX(p.signature)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      tx ↗
+                    </a>
+                  )}
+                </>
+              ) : (
+                <span className="muted">
+                  empty cell — click to bake the first pixel here
+                </span>
+              )}
+            </div>
+          );
+        })()}
     </div>
   );
 }
