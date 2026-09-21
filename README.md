@@ -37,6 +37,20 @@ Because the format is a public convention (`CCv1` memos to a fixed treasury),
 **anyone** can rebuild, fork, or audit the artwork — the canvas is permissionless
 on-chain state.
 
+### Prove it yourself: rebuild the board from chain data
+
+```bash
+node tools/rebuild-from-chain.mjs                # stats + ASCII preview
+node tools/rebuild-from-chain.mjs --png out.png   # also render the artwork
+```
+
+Zero dependencies — raw JSON-RPC against the public Cookie Chain RPC. It walks
+every transaction that ever touched the treasury, parses `CCv1` memos, and
+reconstructs the full board (newest write wins, same rule as the app). Point
+`RPC=` / `TREASURY=` at any SVM network to audit a fork. The protocol path can
+also be exercised on Solana devnet with `tools/devnet-e2e.mjs` (needs a working
+faucet; the public one has been dry).
+
 ## Features
 
 - Nightly wallet connection (Wallet Standard; other Solana wallets work too)
