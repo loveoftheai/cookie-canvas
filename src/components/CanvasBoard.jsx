@@ -2,7 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { CANVAS_H, CANVAS_W } from "../lib/chain";
 
 // 96x96 board rendered on <canvas>, zoomable & pannable by drag.
-export default function CanvasBoard({ pixels, pending, onPlace, disabled }) {
+export default function CanvasBoard({
+  pixels,
+  pending,
+  onPlace,
+  disabled,
+  empty,
+  onDemo,
+}) {
   const ref = useRef(null);
   const [color, setColor] = useState("#f0b050"); // set by parent palette via props below
   const [hover, setHover] = useState(null);
@@ -128,6 +135,19 @@ export default function CanvasBoard({ pixels, pending, onPlace, disabled }) {
           );
         }}
       />
+      {empty && (
+        <div className="board-empty">
+          <b>The chain canvas is blank.</b>
+          <span>
+            No real pixels yet — each one costs a transaction (0.000001 COOK),
+            so the board only fills when someone pays to paint. Be the first, or
+            look around first:
+          </span>
+          <button className="demo-btn" onClick={onDemo}>
+            ▶ Try demo
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -131,6 +131,8 @@ export default function App() {
             pending={pending}
             onPlace={handlePlace}
             disabled={(!connected && !demoActive) || busy || cooldown}
+            empty={!connected && !demoActive && !loading && pixels.size === 0}
+            onDemo={startDemo}
           />
           <ReplayBar pixels={pixels} onReplay={setReplayUntil} />
           {replayUntil !== null && (

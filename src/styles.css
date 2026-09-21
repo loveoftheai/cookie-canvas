@@ -388,3 +388,35 @@ footer {
 .replay-banner {
   margin-top: 8px;
 }
+
+/* empty-board invitation (live board blank, wallet not connected) */
+.board-wrap {
+  position: relative;
+}
+.board-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: 24px;
+  background: radial-gradient(
+    circle at center,
+    rgba(31, 24, 19, 0.55),
+    rgba(20, 16, 12, 0.88)
+  );
+  border-radius: inherit;
+}
+.board-empty b {
+  color: var(--warm, #f0b050);
+  font-size: 17px;
+}
+.board-empty span {
+  color: #b2a091;
+  max-width: 400px;
+  line-height: 1.5;
+  font-size: 13.5px;
+}
