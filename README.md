@@ -1,14 +1,21 @@
 # 🍪 Cookie Canvas
 
-A collaborative pixel-art board that lives **entirely on Cookie Chain**. Every pixel
+A collaborative pixel-art board that lives **entirely on-chain** — Cookie Chain
+(mainnet) and Solana Devnet, same protocol, one toggle. Every pixel
 placed by every visitor is a real on-chain transaction; the whole artwork can be
 rebuilt from public chain data alone — no backend, no database, no indexer service.
 
 Built for the **"Create an App on Cookie Chain"** bounty (Superteam Earn), and
 submitted to the **Colosseum Crypto World's Fair MVP hackathon**.
 
-**Live:** https://loveoftheai.github.io/cookie-canvas/ ·
+**Live:** https://loveoftheai.github.io/cookie-canvas/ (devnet mode: `?net=devnet`) ·
 **Demo video:** https://youtu.be/LLyP8R0Tkb8
+
+## Screenshots
+
+| Live board + activity feed | Pixel provenance (hover)           | Time-lapse replay                    |
+| -------------------------- | ---------------------------------- | ------------------------------------ |
+| ![board](docs/board.png)   | ![provenance](docs/provenance.png) | ![replay](docs/timelapse-replay.png) |
 
 ## Demo mode (honest by design)
 
@@ -47,17 +54,31 @@ node tools/rebuild-from-chain.mjs --png out.png   # also render the artwork
 Zero dependencies — raw JSON-RPC against the public Cookie Chain RPC. It walks
 every transaction that ever touched the treasury, parses `CCv1` memos, and
 reconstructs the full board (newest write wins, same rule as the app). Point
-`RPC=` / `TREASURY=` at any SVM network to audit a fork. The protocol path can
-also be exercised on Solana devnet with `tools/devnet-e2e.mjs` (needs a working
-faucet; the public one has been dry).
+`RPC=` / `TREASURY=` at any SVM network to audit a fork.
+
+## Solana Devnet mode (real Solana transactions)
+
+The same `CCv1` protocol runs on a second SVM chain — toggle **◎ Solana Devnet**
+in the header (or open `?net=devnet`). Every pixel there is a **real Solana
+Devnet transaction**: memo `CCv1:x,y:rrggbb` + a 0.000001 SOL transfer to
+[`2hAXRdZkoZvgeA9FK5jxhPXtRPk7Z51XFJa8b6pgdYtE`](https://solscan.io/account/2hAXRdZkoZvgeA9FK5jxhPXtRPk7Z51XFJa8b6pgdYtE?cluster=devnet),
+verifiable on Solscan. Verify the devnet board independently:
+
+```bash
+TREASURY=2hAXRdZkoZvgeA9FK5jxhPXtRPk7Z51XFJa8b6pgdYtE \
+RPC=https://api.devnet.solana.com node tools/rebuild-from-chain.mjs
+```
 
 ## Features
 
 - Nightly wallet connection (Wallet Standard; other Solana wallets work too)
 - Real transaction execution with clear pending → confirming → confirmed status
-- Explorer links for every pixel & artist (cookiescan.io)
+- Explorer links for every pixel & artist (cookiescan.io / Solscan per network)
+- **Pixel provenance card** — hover any pixel for its coordinates, color,
+  signer, blockTime, and the transaction on the explorer
 - Live activity feed via websocket
 - Leaderboard (all-time / 24h), 24h activity histogram, treasury total
+- **Dual-network** — Cookie Chain mainnet ↔ Solana Devnet toggle, one CCv1 protocol
 - Error handling: rejected signatures, failed sends, RPC hiccups — surfaced as toasts
 - Pan / zoom board, cookie-warm palette + custom color picker
 - **Time-lapse replay** — every pixel carries its blockTime; scrub or play the
