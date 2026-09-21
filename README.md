@@ -46,6 +46,9 @@ on-chain state.
 - Leaderboard (all-time / 24h), 24h activity histogram, treasury total
 - Error handling: rejected signatures, failed sends, RPC hiccups — surfaced as toasts
 - Pan / zoom board, cookie-warm palette + custom color picker
+- **Time-lapse replay** — every pixel carries its blockTime; scrub or play the
+  board's history and watch the artwork form (6s / 15s / 30s speeds, live-mode
+  return). Works on chain-indexed pixels and the demo timeline alike.
 
 ## Run locally
 
