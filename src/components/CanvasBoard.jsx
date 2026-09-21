@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { CANVAS_H, CANVAS_W, EXPLORER_TX } from "../lib/chain";
+import { CANVAS_H, CANVAS_W, EXPLORER_TX, NET } from "../lib/chain";
 
 const fmtTime = (t) =>
   t
@@ -101,7 +101,8 @@ export default function CanvasBoard({
     <div className="board-wrap" ref={wrapRef}>
       <div className="board-hint">
         drag to pan · scroll to zoom · click a cell to bake a pixel (1 tx =
-        0.000001 COOK) · hover a pixel for its on-chain provenance
+        0.000001 {NET.needsBridge ? "COOK" : "SOL"}) · hover a pixel for its
+        on-chain provenance
       </div>
       <canvas
         ref={ref}
@@ -150,7 +151,8 @@ export default function CanvasBoard({
         <div className="board-empty">
           <b>The chain canvas is blank.</b>
           <span>
-            No real pixels yet — each one costs a transaction (0.000001 COOK),
+            No real pixels yet — each one costs a transaction (0.000001
+            {NET.needsBridge ? "COOK" : "SOL"}),
             so the board only fills when someone pays to paint. Be the first, or
             look around first:
           </span>

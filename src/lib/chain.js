@@ -1,4 +1,5 @@
-// Cookie Canvas — chain bindings for Cookie Chain (SVM)
+// Cookie Canvas — chain bindings. The canvas lives on Cookie Chain (SVM) and
+// can also run on Solana Devnet (same CCv1 memo convention, real transactions).
 import {
   Connection,
   PublicKey,
@@ -8,19 +9,56 @@ import {
   LAMPORTS_PER_SOL,
 } from "@solana/web3.js";
 
-export const COOKIE_RPC = "https://rpc.cookiescan.io";
-// NOTE: docs say wss.cookiescan.io but its TLS cert is invalid — the RPC host
-// serves the same websocket endpoint.
-export const COOKIE_WSS = "wss://rpc.cookiescan.io";
-export const EXPLORER_TX = (sig) => `https://cookiescan.io/tx/${sig}`;
-export const EXPLORER_ADDR = (addr) => `https://cookiescan.io/account/${addr}`;
+// Both networks use the identical protocol: a pixel = one transaction carrying
+// a `CCv1:` memo + a tiny native transfer to that network's TREASURY. The board
+// is fully reconstructible from chain data alone (getSignaturesForAddress).
+export const NETWORKS = {
+  cookie: {
+    key: "cookie",
+    label: "Cookie Chain",
+    // NOTE: docs say wss.cookiescan.io but its TLS cert is invalid — the RPC host
+    // serves the same websocket endpoint.
+    rpc: "https://rpc.cookiescan.io",
+    wss: "wss://rpc.cookiescan.io",
+    treasury: "5qnXpdxeJzn8zYgU4ezgFP4FrMJ6BwMBUUxpRHqQEeJS",
+    explorerTx: (sig) => `https://cookiescan.io/tx/${sig}`,
+    explorerAddr: (addr) => `https://cookiescan.io/account/${addr}`,
+    unit: "COOK",
+    needsBridge: true,
+  },
+  devnet: {
+    key: "devnet",
+    label: "Solana Devnet",
+    rpc: "https://api.devnet.solana.com",
+    wss: "wss://api.devnet.solana.com",
+    treasury: "2hAXRdZkoZvgeA9FK5jxhPXtRPk7Z51XFJa8b6pgdYtE",
+    explorerTx: (sig) => `https://solscan.io/tx/${sig}?cluster=devnet`,
+    explorerAddr: (addr) => `https://solscan.io/account/${addr}?cluster=devnet`,
+    unit: "SOL (devnet, no value)",
+    needsBridge: false,
+  },
+};
 
-// Protocol constants — fixed forever. All pixel transactions send PIXEL_COST native COOK
-// to TREASURY and carry a `CCv1:` memo. The canvas is fully reconstructible from
-// chain data alone (getSignaturesForAddress on TREASURY).
-export const TREASURY = new PublicKey(
-  "5qnXpdxeJzn8zYgU4ezgFP4FrMJ6BwMBUUxpRHqQEeJS",
-);
+// Active network is fixed per page load; switching stores it and reloads.
+export function getNetworkKey() {
+  try {
+    const k = localStorage.getItem("cc_net");
+    return NETWORKS[k] ? k : "cookie";
+  } catch {
+    return "cookie";
+  }
+}
+export const NET_KEY = getNetworkKey();
+export const NET = NETWORKS[NET_KEY];
+export function switchNetwork(key) {
+  if (!NETWORKS[key]) return;
+  localStorage.setItem("cc_net", key);
+  location.search = key === "devnet" ? "?net=devnet" : "";
+}
+
+export const EXPLORER_TX = NET.explorerTx;
+export const EXPLORER_ADDR = NET.explorerAddr;
+export const TREASURY = new PublicKey(NET.treasury);
 // spl-memo v1 — verified deployed on Cookie Chain (v2 is NOT; do not switch).
 export const MEMO_PROGRAM_ID = new PublicKey(
   "Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo",
@@ -33,8 +71,8 @@ export const MEMO_PREFIX = "CCv1";
 let _conn = null;
 export function getConnection() {
   if (!_conn)
-    _conn = new Connection(COOKIE_RPC, {
-      wsEndpoint: COOKIE_WSS,
+    _conn = new Connection(NET.rpc, {
+      wsEndpoint: NET.wss,
       commitment: "confirmed",
     });
   return _conn;

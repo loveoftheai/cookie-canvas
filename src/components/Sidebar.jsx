@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { EXPLORER_ADDR, EXPLORER_TX, PIXEL_COST } from "../lib/chain";
+import { EXPLORER_ADDR, EXPLORER_TX, PIXEL_COST, NET } from "../lib/chain";
 
 const short = (a) => `${a.slice(0, 4)}…${a.slice(-4)}`;
 const ago = (t) => {
@@ -178,7 +178,7 @@ export function Leaderboard({ feed, pixels }) {
         </div>
         <div>
           <b>{(stats.total * (PIXEL_COST / 1e9)).toFixed(6)}</b>
-          <span>COOK in treasury</span>
+          <span>{NET.needsBridge ? "COOK" : "devnet SOL"} in treasury</span>
         </div>
       </div>
       <div className="hist">

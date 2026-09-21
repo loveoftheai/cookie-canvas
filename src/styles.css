@@ -455,3 +455,27 @@ footer {
 .pixel-pop a {
   color: #f0b050;
 }
+
+/* network switcher */
+.net-switch {
+  display: inline-flex;
+  border: 1px solid var(--line, #262d3a);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.net-btn {
+  background: transparent;
+  color: var(--dim, #8a94a6);
+  border: none;
+  padding: 6px 10px;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+.net-btn.on {
+  background: #f0b050;
+  color: #0d1016;
+  font-weight: 700;
+}
+.net-banner {
+  border-color: #5eead4;
+}

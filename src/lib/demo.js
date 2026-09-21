@@ -79,16 +79,21 @@ function scattered(count = 46) {
 export function buildDemoTimeline() {
   const items = [];
   const now = Math.floor(Date.now() / 1000);
-  const loose = scattered().map((p, i) => ({
+  // Timeline layout over a ~2h window so the time-lapse replay reads well:
+  // loose pixels by "other artists" warm up the first stretch, then the cookie
+  // draws itself row by row across the rest — a smooth scrub, not a burst.
+  const loosePx = scattered();
+  const loose = loosePx.map((p, i) => ({
     ...p,
     signer: DEMO_SIGNERS[1 + (i % 3)],
-    blockTime: now - 7200 + (i % 40) * 90, // spread over the last ~2h
+    blockTime: now - 7200 + Math.floor((i / loosePx.length) * 840), // first ~12%
   }));
-  const cookie = cookiePattern().map((p, i) => ({
+  const cookiePx = cookiePattern();
+  const cookie = cookiePx.map((p, i) => ({
     ...p,
-    // the cookie is "baked" most recently, row by row
+    // the cookie "bakes" itself row by row across the remaining ~88%
     signer: DEMO_SIGNERS[0],
-    blockTime: now - 2400 + Math.floor((i / 1400) * 2100),
+    blockTime: now - 6300 + Math.floor((i / cookiePx.length) * 6240),
   }));
   items.push(...loose, ...cookie);
   items.forEach((it, i) => {
