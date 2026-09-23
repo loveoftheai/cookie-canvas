@@ -9,7 +9,7 @@ Built for the **"Create an App on Cookie Chain"** bounty (Superteam Earn), and
 submitted to the **Colosseum Crypto World's Fair MVP hackathon**.
 
 **Live:** https://loveoftheai.github.io/cookie-canvas/ (devnet mode: `?net=devnet`) ·
-**Demo video:** https://youtu.be/LLyP8R0Tkb8
+**Demo video (2:14, all real):** https://loveoftheai.github.io/demo-videos/e5_real.mp4
 
 ## Screenshots
 
@@ -62,7 +62,11 @@ The same `CCv1` protocol runs on a second SVM chain — toggle **◎ Solana Devn
 in the header (or open `?net=devnet`). Every pixel there is a **real Solana
 Devnet transaction**: memo `CCv1:x,y:rrggbb` + a 0.000001 SOL transfer to
 [`2hAXRdZkoZvgeA9FK5jxhPXtRPk7Z51XFJa8b6pgdYtE`](https://solscan.io/account/2hAXRdZkoZvgeA9FK5jxhPXtRPk7Z51XFJa8b6pgdYtE?cluster=devnet),
-verifiable on Solscan. Verify the devnet board independently:
+verifiable on Solscan — e.g. the first genesis pixels:
+[`40,40`](https://solscan.io/tx/2uWfpkgQ5UVupPG56KX3gUpTCVdsqmYfk5xnqeSygDQ1PA1tPA646izKdGdUjFQ3nGJtMj7d8XgznGkg1oMH9Asi?cluster=devnet),
+[`41,40`](https://solscan.io/tx/nTC2fUFh1KdMU5AFeJ5PeoxPcN4Bqivm93TSNQJ2FX45eHBYtGYh9BgrH5qr6evAB6BJdgdyxyp4uTBqqjjhRVk?cluster=devnet),
+[`55,44`](https://solscan.io/tx/3BcVPCAKQjkp6bZQGFTZChQumaN7fa6wZMitroUnizg3GqnaJeqKUFWGCkymUNJsoD7LJx2BsVX8PVVGofCvKdRE?cluster=devnet).
+Verify the devnet board independently:
 
 ```bash
 TREASURY=2hAXRdZkoZvgeA9FK5jxhPXtRPk7Z51XFJa8b6pgdYtE \
