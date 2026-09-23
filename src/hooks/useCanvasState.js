@@ -4,6 +4,7 @@ import {
   TREASURY,
   buildPixelTx,
   fetchPixelFromTx,
+  fetchPixelsBatch,
   fetchPixelSignatures,
   getConnection,
   shortSleep,
@@ -11,7 +12,7 @@ import {
 import { buildDemoTimeline, nextDemoSig } from "../lib/demo";
 
 const HISTORY_PAGES = 4; // ~4000 most recent pixels on load
-const FETCH_CONCURRENCY = 6;
+const BATCH_CHUNK = 25; // txs per batched JSON-RPC POST during backfill
 
 export function useCanvasState({ publicKey, signTransaction, connected }) {
   // pixels: Map "x,y" -> { x, y, rgb, signature, signer, blockTime }
@@ -71,13 +72,19 @@ export function useCanvasState({ publicKey, signTransaction, connected }) {
         // newest first — later pixels overwrite earlier in the Map
         setProgress({ done: 0, total: sigs.length });
         let done = 0;
-        for (let i = 0; i < sigs.length; i += FETCH_CONCURRENCY) {
-          const batch = sigs.slice(i, i + FETCH_CONCURRENCY);
-          const results = await Promise.all(
-            batch.map((s) => fetchPixelFromTx(s.signature).catch(() => null)),
-          );
+        for (let i = 0; i < sigs.length; i += BATCH_CHUNK) {
+          const chunk = sigs.slice(i, i + BATCH_CHUNK);
+          let results;
+          try {
+            results = await fetchPixelsBatch(chunk.map((s) => s.signature));
+          } catch {
+            // batch endpoint unhappy? fall back to per-sig fetch
+            results = await Promise.all(
+              chunk.map((s) => fetchPixelFromTx(s.signature).catch(() => null)),
+            );
+          }
           results.forEach((r) => !dead && ingest(r));
-          done += batch.length;
+          done += chunk.length;
           if (!dead) setProgress({ done, total: sigs.length });
           await shortSleep(120); // be polite to the public RPC
         }

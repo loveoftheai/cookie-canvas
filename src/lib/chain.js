@@ -133,13 +133,8 @@ export async function fetchPixelSignatures(pages = 4) {
   return sigs;
 }
 
-/** Fetch a tx and extract { pixel, signer, slot, blockTime } if it is a valid CCv1 pixel. */
-export async function fetchPixelFromTx(signature) {
-  const conn = getConnection();
-  const tx = await conn.getParsedTransaction(signature, {
-    maxSupportedTransactionVersion: 0,
-  });
-  if (!tx) return null;
+/** Extract { pixel, signer, slot, blockTime } from a jsonParsed tx, or null. */
+function pixelFromTx(tx, signature) {
   const signerKey =
     tx.transaction.message.accountKeys.find((k) => k.signer) ??
     tx.transaction.message.accountKeys[0];
@@ -158,6 +153,66 @@ export async function fetchPixelFromTx(signature) {
     slot: tx.slot,
     blockTime: tx.blockTime,
   };
+}
+
+/** Fetch a tx and extract a CCv1 pixel (single-signature convenience). */
+export async function fetchPixelFromTx(signature) {
+  const conn = getConnection();
+  const tx = await conn.getParsedTransaction(signature, {
+    maxSupportedTransactionVersion: 0,
+  });
+  if (!tx) return null;
+  return pixelFromTx(tx, signature);
+}
+
+/**
+ * Batched JSON-RPC backfill: many getTransaction calls in one HTTP POST.
+ * Public RPCs throttle per request, so pulling ~25 txs per round-trip speeds
+ * board reconstruction up enormously without hammering the endpoint.
+ * Returns an array aligned with `signatures` (null where not a CCv1 pixel).
+ */
+export async function fetchPixelsBatch(signatures) {
+  if (!signatures.length) return [];
+  const results = new Array(signatures.length).fill(null);
+  let pending = signatures.map((signature, i) => ({ signature, i }));
+  // devnet load-balancers often miss a tx on a given node: one retry round
+  // (which may land on a different node) recovers most of the nulls.
+  for (let round = 0; round < 2 && pending.length; round++) {
+    if (round) await shortSleep(600);
+    const res = await fetch(NET.rpc, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(
+        pending.map(({ signature }, i) => ({
+          jsonrpc: "2.0",
+          id: i,
+          method: "getTransaction",
+          params: [
+            signature,
+            { maxSupportedTransactionVersion: 0, encoding: "jsonParsed" },
+          ],
+        })),
+      ),
+    });
+    if (!res.ok) throw new Error("batch rpc http " + res.status);
+    const arr = await res.json();
+    const byId = new Map(arr.map((r) => [r.id, r]));
+    const still = [];
+    for (let i = 0; i < pending.length; i++) {
+      const r = byId.get(i);
+      if (r && !r.error && r.result) {
+        try {
+          results[pending[i].i] = pixelFromTx(r.result, pending[i].signature);
+        } catch {
+          /* unparseable — leave null */
+        }
+      } else {
+        still.push(pending[i]);
+      }
+    }
+    pending = still;
+  }
+  return results;
 }
 
 function extractMemoFromLogs(logs) {
