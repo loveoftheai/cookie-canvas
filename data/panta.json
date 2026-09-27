@@ -1,58 +1,34 @@
 {
- "generatedAt": "2026-09-27T00:37:01.119Z",
+ "generatedAt": "2026-09-27T00:45:51.619Z",
  "source": "Panta API v1 (live-api.panta.market) — agent pipeline, daily 06:23 CST",
  "survivalMarket": {
-  "question": "Will Cookie Canvas's genesis pixel still be painted on the board at the Crypto World's Fair final deadline (Oct 12, 2026)? — daily re-quote 2026-09-27",
+  "question": "Will Cookie Canvas's genesis pixel still be painted on the board at the Crypto World's Fair final deadline (Oct 12, 2026)? — daily re-quote 2026-09-27 00:45 UTC",
   "resolutionRule": "Rebuild the board from full chain history (CCv1 memo transactions only — script: npm run rebuild in the Cookie Canvas repo) at 2026-10-12 23:59 PDT. Take the cell (x,y) and color painted by the earliest CCv1 memo on the board. YES if the most recent memo for that same cell at the deadline still shows the genesis color; NO if the cell is empty or was repainted.",
   "sourcesOfTruth": [
    "https://loveoftheai.github.io/cookie-canvas/",
    "https://github.com/loveoftheai/cookie-canvas"
   ],
   "quote": {
-   "createId": "cr_8566f73fb6c54fd5b2380d9dd6cacd3b",
+   "createId": "cr_b9e6a22264114697895b75e663580d8f",
    "userId": "usr_ZAFrylAzyyK0vQcRICCxwQ",
    "apiKeyId": "key_vUuTG_pjCNku1_0_QNCmdQ",
-   "expectedEventPda": "CJcnVZJvE7DUpKMahgLWRzjiVwjVzd7Tu9dt8MoPPnsv",
+   "expectedEventPda": "Bm2mbA3YZkLojsYKAZwEqYXUnQuuy6jJy3s5jFXBJFB2",
    "paymentUsdc": "50000000",
    "liquidityInjectionUsdc": "10000000",
    "platformRevenueUsdc": "40000000",
    "marketType": "standard",
-   "expiresAt": "2026-09-27T00:42:18.006358Z",
+   "expiresAt": "2026-09-27T00:51:40.887578Z",
    "blockhashExpiryHintSec": 60
   },
   "note": "Real quote from POST /markets/create/quote/. Not broadcast — creation costs 50 USDC and the desk wallet is unfunded; shown as an honest artifact of the integration. Resolution reads chain history directly, so the market needs no trusted oracle."
  },
  "pulse": [
   {
-   "id": "Fx2epjn3RMBFLLmSrPp7Hx5QnnZDTxP87M1p3Yn4k7rE",
-   "title": "Will CZ tweet about BNB in the next 10 minutes?",
-   "yesPrice": "0",
-   "endTime": 1785720000,
-   "phase": "resolved",
-   "source": "catalog snapshot"
-  },
-  {
-   "id": "7PLAUtBr2p9gFsCgwpEyrV5nHABmmPrZKbK22YjSFA34",
-   "title": "Will Amazon stock price reach $300 by 1pm CT, August 4 2026?",
-   "yesPrice": "0",
-   "endTime": 1785866400,
-   "phase": "resolved",
-   "source": "catalog snapshot"
-  },
-  {
-   "id": "7sTETaG8dksRhEQLaRGjkiNwu4ny5PdNyzM7GnrvKH1H",
-   "title": "Will Samsung tweet about crypto in the next 5 minutes ?",
-   "yesPrice": "0",
-   "endTime": 1785925800,
-   "phase": "resolved",
-   "source": "catalog snapshot"
-  },
-  {
-   "id": "8ptLaNR3tY5jkspPMr8utCxBBE3zsoLk9KF9DUeF1WjN",
-   "title": "Will Tesla (NASDAQ: TSLA) close above $330.00 on Friday, August 7, 2026?",
-   "yesPrice": "0",
-   "endTime": 1786133700,
-   "phase": "resolved",
+   "id": "GXh9iztJTm5v6qDWnR4YcKHbSc3AUZ2VEMGfKEegd92V",
+   "title": "Will GTA 6 release on November 19th, 2026",
+   "yesPrice": "0.5",
+   "endTime": 1795204800,
+   "phase": "secondary",
    "source": "catalog snapshot"
   }
  ]
