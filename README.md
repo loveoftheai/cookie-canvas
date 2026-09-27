@@ -114,3 +114,16 @@ Cookie Chain public RPC. Zero backend — the chain is the database.
 ## License
 
 MIT
+
+## Prediction Wall (Panta API)
+
+A second view in the app (header toggle): every Panta prediction market painted as a pixel —
+gold = resolved YES, gray = resolved NO, green→red = open market implied YES price, dashed outline = primary (pre-open).
+A resolution strip at the bottom keeps the market's memory, like the board keeps its transaction history.
+Click any cell for the market card (prices, volumes, oracle, countdown, recorded quote probes) and a trade link.
+
+Data is a real Panta API snapshot produced by the [Panta Copilot](https://loveoftheai.github.io/panta-copilot/) agent pipeline
+(catalog + per-market details + live `primaryorderquote` probes, failures recorded as-is). Nothing on the wall is invented;
+the app never holds keys — quoting and signing stay on panta.market.
+
+Built for the Panta API Side Track (Crypto World's Fair).
