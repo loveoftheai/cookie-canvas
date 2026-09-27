@@ -1,23 +1,23 @@
 {
- "generatedAt": "2026-09-27T00:45:51.619Z",
+ "generatedAt": "2026-09-27T00:47:54.801Z",
  "source": "Panta API v1 (live-api.panta.market) — agent pipeline, daily 06:23 CST",
  "survivalMarket": {
-  "question": "Will Cookie Canvas's genesis pixel still be painted on the board at the Crypto World's Fair final deadline (Oct 12, 2026)? — daily re-quote 2026-09-27 00:45 UTC",
+  "question": "Will Cookie Canvas's genesis pixel still be painted on the board at the Crypto World's Fair final deadline (Oct 12, 2026)? — daily re-quote 2026-09-27 00:47 UTC",
   "resolutionRule": "Rebuild the board from full chain history (CCv1 memo transactions only — script: npm run rebuild in the Cookie Canvas repo) at 2026-10-12 23:59 PDT. Take the cell (x,y) and color painted by the earliest CCv1 memo on the board. YES if the most recent memo for that same cell at the deadline still shows the genesis color; NO if the cell is empty or was repainted.",
   "sourcesOfTruth": [
    "https://loveoftheai.github.io/cookie-canvas/",
    "https://github.com/loveoftheai/cookie-canvas"
   ],
   "quote": {
-   "createId": "cr_b9e6a22264114697895b75e663580d8f",
+   "createId": "cr_273a8c75209847b98fe4f0fe5af499b2",
    "userId": "usr_ZAFrylAzyyK0vQcRICCxwQ",
    "apiKeyId": "key_vUuTG_pjCNku1_0_QNCmdQ",
-   "expectedEventPda": "Bm2mbA3YZkLojsYKAZwEqYXUnQuuy6jJy3s5jFXBJFB2",
+   "expectedEventPda": "EhNYuZQ8HRY2dn9fH3eH7wK63zDeXojd847JK4hDsff",
    "paymentUsdc": "50000000",
    "liquidityInjectionUsdc": "10000000",
    "platformRevenueUsdc": "40000000",
    "marketType": "standard",
-   "expiresAt": "2026-09-27T00:51:40.887578Z",
+   "expiresAt": "2026-09-27T00:53:11.456261Z",
    "blockhashExpiryHintSec": 60
   },
   "note": "Real quote from POST /markets/create/quote/. Not broadcast — creation costs 50 USDC and the desk wallet is unfunded; shown as an honest artifact of the integration. Resolution reads chain history directly, so the market needs no trusted oracle."
