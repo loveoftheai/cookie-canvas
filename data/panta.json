@@ -1,34 +1,58 @@
 {
- "generatedAt": "2026-09-27T00:47:54.801Z",
+ "generatedAt": "2026-09-30T01:37:05.114Z",
  "source": "Panta API v1 (live-api.panta.market) — agent pipeline, daily 06:23 CST",
  "survivalMarket": {
-  "question": "Will Cookie Canvas's genesis pixel still be painted on the board at the Crypto World's Fair final deadline (Oct 12, 2026)? — daily re-quote 2026-09-27 00:47 UTC",
+  "question": "Will Cookie Canvas's genesis pixel still be painted on the board at the Crypto World's Fair final deadline (Oct 12, 2026)? — daily re-quote 2026-09-30 01:37 UTC",
   "resolutionRule": "Rebuild the board from full chain history (CCv1 memo transactions only — script: npm run rebuild in the Cookie Canvas repo) at 2026-10-12 23:59 PDT. Take the cell (x,y) and color painted by the earliest CCv1 memo on the board. YES if the most recent memo for that same cell at the deadline still shows the genesis color; NO if the cell is empty or was repainted.",
   "sourcesOfTruth": [
    "https://loveoftheai.github.io/cookie-canvas/",
    "https://github.com/loveoftheai/cookie-canvas"
   ],
   "quote": {
-   "createId": "cr_273a8c75209847b98fe4f0fe5af499b2",
+   "createId": "cr_c78d5bd5523d487f80721fc079104510",
    "userId": "usr_ZAFrylAzyyK0vQcRICCxwQ",
    "apiKeyId": "key_vUuTG_pjCNku1_0_QNCmdQ",
-   "expectedEventPda": "EhNYuZQ8HRY2dn9fH3eH7wK63zDeXojd847JK4hDsff",
+   "expectedEventPda": "2bCZdpZEtAuzkUfnu2aUHe7LWZQV2MbqQ2AjwbGYT1Au",
    "paymentUsdc": "50000000",
    "liquidityInjectionUsdc": "10000000",
    "platformRevenueUsdc": "40000000",
    "marketType": "standard",
-   "expiresAt": "2026-09-27T00:53:11.456261Z",
+   "expiresAt": "2026-09-30T01:42:22.380479Z",
    "blockhashExpiryHintSec": 60
   },
   "note": "Real quote from POST /markets/create/quote/. Not broadcast — creation costs 50 USDC and the desk wallet is unfunded; shown as an honest artifact of the integration. Resolution reads chain history directly, so the market needs no trusted oracle."
  },
  "pulse": [
   {
-   "id": "GXh9iztJTm5v6qDWnR4YcKHbSc3AUZ2VEMGfKEegd92V",
-   "title": "Will GTA 6 release on November 19th, 2026",
-   "yesPrice": "0.5",
-   "endTime": 1795204800,
+   "id": "F2nK5f6NTgVA8zVT2CzRYRNaMcntv3njEkNCozGMs2Sj",
+   "title": "Will SpaceX’s Starship (Flight 14) successfully achieve its target Earth orbit and deploy at least one Starlink V3 satellite on or before Wednesday, September 30, 2026, at 11:59 PM BST?",
+   "yesPrice": "0.50014949",
+   "endTime": 1790809140,
    "phase": "secondary",
+   "source": "catalog snapshot"
+  },
+  {
+   "id": "6wXkUmZdLSU1Fm2wRY3rrTuPZ3a3t2rzZarFAYqUXM98",
+   "title": "Will Ethereum (ETH) close at or above $2,700.00 on Wednesday, September 30, 2026, at 11:59 PM BST?",
+   "yesPrice": "0.500046922",
+   "endTime": 1790809140,
+   "phase": "secondary",
+   "source": "catalog snapshot"
+  },
+  {
+   "id": "4yiz9ycF3PTwf6tMdTKTzFWNo9Yrph4XsSRHgPMpLpjG",
+   "title": "Will ICE Brent Crude Oil Futures (December 2026 Contract) settle at or above $104.00 per barrel on Thursday, October 1, 2026, at 6:30 PM BST?",
+   "yesPrice": "0.500096044",
+   "endTime": 1790875800,
+   "phase": "primary",
+   "source": "catalog snapshot"
+  },
+  {
+   "id": "ALio3GkarKxXy8qLdZwiUJo6XhS5QvuKw4bZKzruYdP6",
+   "title": "Over 38.5 combined score in the Pittsburgh Steelers vs. Cleveland Browns game on Thursday, October 1, 2026?",
+   "yesPrice": "0.502247129",
+   "endTime": 1790913600,
+   "phase": "primary",
    "source": "catalog snapshot"
   }
  ]
