@@ -1,57 +1,33 @@
 {
- "generatedAt": "2026-10-03T22:59:29.104Z",
+ "generatedAt": "2026-10-05T22:54:37.609Z",
  "source": "Panta API v1 (live-api.panta.market) — agent pipeline, daily 06:23 CST",
  "survivalMarket": {
-  "question": "Will Cookie Canvas's genesis pixel still be painted on the board at the Crypto World's Fair final deadline (Oct 12, 2026)? — daily re-quote 2026-10-03 22:59 UTC",
+  "question": "Will Cookie Canvas's genesis pixel still be painted on the board at the Crypto World's Fair final deadline (Oct 12, 2026)? — daily re-quote 2026-10-05 22:54 UTC",
   "resolutionRule": "Rebuild the board from full chain history (CCv1 memo transactions only — script: npm run rebuild in the Cookie Canvas repo) at 2026-10-12 23:59 PDT. Take the cell (x,y) and color painted by the earliest CCv1 memo on the board. YES if the most recent memo for that same cell at the deadline still shows the genesis color; NO if the cell is empty or was repainted.",
   "sourcesOfTruth": [
    "https://loveoftheai.github.io/cookie-canvas/",
    "https://github.com/loveoftheai/cookie-canvas"
   ],
   "quote": {
-   "createId": "cr_53129b925a5447c48ca7400c68d1aff1",
+   "createId": "cr_a3b0aa2b74e244cdb50c8f3d965dd346",
    "userId": "usr_ZAFrylAzyyK0vQcRICCxwQ",
    "apiKeyId": "key_vUuTG_pjCNku1_0_QNCmdQ",
-   "expectedEventPda": "6LgAhBKiRb1QAmE2BPfndhjSJ6bWtvWFEgQjhUdyiy61",
+   "expectedEventPda": "B3mTfgBf32HvV3WUq2AsE7g5EQXWwYpvEXwaPmBsgWoQ",
    "paymentUsdc": "50000000",
    "liquidityInjectionUsdc": "10000000",
    "platformRevenueUsdc": "40000000",
    "marketType": "standard",
-   "expiresAt": "2026-10-03T23:05:18.384283Z",
+   "expiresAt": "2026-10-05T23:00:27.612059Z",
    "blockhashExpiryHintSec": 60
   },
   "note": "Real quote from POST /markets/create/quote/. Not broadcast — creation costs 50 USDC and the desk wallet is unfunded; shown as an honest artifact of the integration. Resolution reads chain history directly, so the market needs no trusted oracle."
  },
  "pulse": [
   {
-   "id": "2vydGh1EPCCbzBncAZFcAbiiWZ9A6uuxt3Ay9Lf3qdZU",
-   "title": "Will bitcoin hit 85k in by October 4th 2026 1am WAT",
-   "yesPrice": "0.504942094",
-   "endTime": 1791072900,
-   "phase": "primary",
-   "source": "catalog snapshot"
-  },
-  {
-   "id": "DW1G3gChuFpMJDCURtkQ6K6Ye2ihyv3Vsob1QE8Tivq7",
-   "title": "Will Tram finish in the Top 3 of BBNaija Season 11?⁠",
+   "id": "5fhzcovNvTnWgUMZbPSgFxJwcgRCSFemjiu5DLsvsosT",
+   "title": "Will bitcoin hit $100,000 by 31 Dec 2026",
    "yesPrice": "0.5",
-   "endTime": 1791151200,
-   "phase": "secondary",
-   "source": "catalog snapshot"
-  },
-  {
-   "id": "5cyMGUVDcToJ8ws5V1sKkGnzthLrLTsqEjo3Pa2HNU8v",
-   "title": "France will concede in the first 25 minutes against Belgium on the 05 October.",
-   "yesPrice": "0.501445429",
-   "endTime": 1791227700,
-   "phase": "primary",
-   "source": "catalog snapshot"
-  },
-  {
-   "id": "4J6WxFGuCw9deMJ6pQ7gwpVXCvLorMrz28icSnCYWeGB",
-   "title": "Manchester United will win against Spurs with 2 or more goals",
-   "yesPrice": "0.518009008",
-   "endTime": 1791662400,
+   "endTime": 1798671600,
    "phase": "secondary",
    "source": "catalog snapshot"
   }
