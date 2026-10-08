@@ -1,42 +1,58 @@
 {
- "generatedAt": "2026-10-06T22:58:06.523Z",
+ "generatedAt": "2026-10-08T22:55:32.694Z",
  "source": "Panta API v1 (live-api.panta.market) — agent pipeline, daily 06:23 CST",
  "survivalMarket": {
-  "question": "Will Cookie Canvas's genesis pixel still be painted on the board at the Crypto World's Fair final deadline (Oct 12, 2026)? — daily re-quote 2026-10-06 22:58 UTC",
+  "question": "Will Cookie Canvas's genesis pixel still be painted on the board at the Crypto World's Fair final deadline (Oct 12, 2026)? — daily re-quote 2026-10-08 22:55 UTC",
   "resolutionRule": "Rebuild the board from full chain history (CCv1 memo transactions only — script: npm run rebuild in the Cookie Canvas repo) at 2026-10-12 23:59 PDT. Take the cell (x,y) and color painted by the earliest CCv1 memo on the board. YES if the most recent memo for that same cell at the deadline still shows the genesis color; NO if the cell is empty or was repainted.",
   "sourcesOfTruth": [
    "https://loveoftheai.github.io/cookie-canvas/",
    "https://github.com/loveoftheai/cookie-canvas"
   ],
   "quote": {
-   "createId": "cr_51f33091e18c42c289bbb7c3447bf600",
+   "createId": "cr_f83e6d9d49714bea91bd4754e4174647",
    "userId": "usr_ZAFrylAzyyK0vQcRICCxwQ",
    "apiKeyId": "key_vUuTG_pjCNku1_0_QNCmdQ",
-   "expectedEventPda": "4yHfZHwSN7XhxR2J7cUUSbKz6xwuehHzuTxNpvditHGw",
+   "expectedEventPda": "BCNr7FeXQHDqzjkuYcEazCG4kFqrGjpmbnfxB9Cef1wV",
    "paymentUsdc": "50000000",
    "liquidityInjectionUsdc": "10000000",
    "platformRevenueUsdc": "40000000",
    "marketType": "standard",
-   "expiresAt": "2026-10-06T23:03:24.736657Z",
+   "expiresAt": "2026-10-08T23:00:51.148198Z",
    "blockhashExpiryHintSec": 60
   },
   "note": "Real quote from POST /markets/create/quote/. Not broadcast — creation costs 50 USDC and the desk wallet is unfunded; shown as an honest artifact of the integration. Resolution reads chain history directly, so the market needs no trusted oracle."
  },
  "pulse": [
   {
-   "id": "4J6WxFGuCw9deMJ6pQ7gwpVXCvLorMrz28icSnCYWeGB",
-   "title": "Manchester United will win against Spurs with 2 or more goals",
-   "yesPrice": "0.518009008",
-   "endTime": 1791662400,
+   "id": "AU4nYXPWKKHtrpKrSg8jjuXHYD2sbYmS9JzXnbV5VJAn",
+   "title": "Will niharika cross 5k followers on x by friday 10pm SGT ?",
+   "yesPrice": "0.500022075",
+   "endTime": 1791518400,
    "phase": "secondary",
    "source": "catalog snapshot"
   },
   {
-   "id": "5fhzcovNvTnWgUMZbPSgFxJwcgRCSFemjiu5DLsvsosT",
-   "title": "Will bitcoin hit $100,000 by 31 Dec 2026",
-   "yesPrice": "0.5",
-   "endTime": 1798671600,
+   "id": "C86nbpSX4ntRWvN4HMrdnhzHjHTtLooNtnw6k7hnmx1F",
+   "title": "Saka 7+ points, GW6",
+   "yesPrice": "0.496843242",
+   "endTime": 1791639000,
+   "phase": "primary",
+   "source": "catalog snapshot"
+  },
+  {
+   "id": "9ArgG5SQf9T6QbVWEjNwpBpNkdPjNWNTNB15nkdivv15",
+   "title": "Will Arsenal beat Leeds United on October 10, 2026?",
+   "yesPrice": "0.51684771",
+   "endTime": 1791640800,
    "phase": "secondary",
+   "source": "catalog snapshot"
+  },
+  {
+   "id": "EtrjihLvFjmztdXwSxhwiKe4fWvVPspMC4TUeede7GLg",
+   "title": "Manchester Vs Tottenham: will both team score a goal",
+   "yesPrice": "0.5",
+   "endTime": 1791657000,
+   "phase": "primary",
    "source": "catalog snapshot"
   }
  ]
